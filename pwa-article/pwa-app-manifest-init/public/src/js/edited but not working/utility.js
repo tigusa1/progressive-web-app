@@ -1,3 +1,24 @@
+//const dataURItoBlob = dataURI => {
+//   const byteString = atob(dataURI.split(',')[1]);
+//   const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+//   const ab = new ArrayBuffer(byteString.length);
+//   const ia = new Uint8Array(ab);
+//   for (let i = 0; i < byteString.length; i++) {
+//       ia[i] = byteString.charCodeAt(i);
+//   }
+//   const blob = new Blob([ab], {type: mimeString});
+//   return blob; 
+//};
+//
+//const dbPromise = idb.openDb('selfies-store', 1, upgradeDB => {
+//   if (!upgradeDB.objectStoreNames.contains('selfies')) {
+//       upgradeDB.createObjectStore('selfies', {keyPath: 'id'});
+//   }
+//   if (!upgradeDB.objectStoreNames.contains('sync-selfies')) {
+//       upgradeDB.createObjectStore('sync-selfies', {keyPath: 'id'});
+//   }
+//});
+//
 
 // TODO: Change this with your own local IP (either localhost/127.0.0.1) or the IP assigned by the phone hot spot
 const SERVER_URL = 'http://localhost:3000';
@@ -53,7 +74,7 @@ const deleteItemFromData = (storeName, id) => {
         .then(() => console.log('Item deleted!'));
 };
 
-const dataURItoBlob= dataURI => {
+const dataURItoBlob = dataURI => {
   const byteString = atob(dataURI.split(',')[1]);
   const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
   const ab = new ArrayBuffer(byteString.length);

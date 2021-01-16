@@ -6,14 +6,13 @@ const URLS_TO_PRECACHE = [
     'src/js/feed.js',
     'src/js/utility.js',
     'src/lib/material.min.js',
+    'src/lib/idb.js',
     'src/css/app.css',
     'src/css/feed.css',
-    'src/images/main-image.jpg',
     'https://fonts.googleapis.com/css?family=Roboto:400,700',
     'https://fonts.googleapis.com/icon?family=Material+Icons',
     'src/images/main-image.jpg',
     'src/images/main-image-lg.jpg',
-    'src/images/main-image.jpg',
     'src/images/main-image-sm.jpg',
 ];
 
@@ -51,11 +50,34 @@ self.addEventListener('fetch', event => {
     );
 });
 
-//self.addEventListener('fetch', event => {
-//    console.log('[Service Worker] Fetching something ....', event);
-//    // This fixes a weird bug in Chrome when you open the Developer Tools
-//    if (event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin') {
-//        return;
-//    }
-//    event.respondWith(fetch(event.request));
-//});
+self.addEventListener('sync', event => {
+ console.log('[Service Worker] Background syncing', event);
+ if (event.tag === 'sync-new-selfies') {
+     console.log('[Service Worker] Syncing new Posts');
+     event.waitUntil(
+         readAllData('sync-selfies')
+         .then(syncSelfies => {
+             for (const syncSelfie of syncSelfies) {
+                 const postData = new FormData();
+                 postData.append('id', syncSelfie.id);
+                 postData.append('title', syncSelfie.title);
+                 postData.append('location', syncSelfie.location);
+                 postData.append('selfie', syncSelfie.selfie);
+                 fetch(API_URL, {method: 'POST', body: postData})
+                 .then(response => {
+                     console.log('Sent data', response);
+                     if (response.ok) {
+                         response.json()
+                         .then(resData => {
+                             deleteItemFromData('sync-selfies',
+                             parseInt(resData.id));
+                         });
+                     }
+                 })
+                 .catch(error => 
+                      console.log('Error while sending data', error));
+             }
+         })
+     );
+ }
+});
