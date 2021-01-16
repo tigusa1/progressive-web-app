@@ -1,3 +1,5 @@
+.DS_Store
+
 # Created by .ignore support plugin (hsz.mobi)
 ### Cloud9 template
 # Cloud9 IDE - http://c9.io
@@ -110,3 +112,4 @@ typings/
 .env
 
 
+pwa-article/pwa-app-manifest-init/.DS_Store

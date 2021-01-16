@@ -1,0 +1,22 @@
+{
+    "name": "Progressive selfies",
+    "short_name": "PWA selfies",
+    "icons": [
+        {
+        "src": "/src/images/icons/PWA-icon-192x192.png",
+        "type": "image/png",
+        "sizes": "192x192"
+        },
+        {
+        "src": "/src/images/icons/PWA-icon-512x512.png",
+        "type": "image/png",
+        "sizes": "512x512"
+        }
+    ],
+    "theme_color": "#2196f3",
+    "background_color": "#21f330",
+    "display": "standalone",
+    "orientation": "landscape",
+    "scope": ".",
+    "start_url": "/index.html"
+}
